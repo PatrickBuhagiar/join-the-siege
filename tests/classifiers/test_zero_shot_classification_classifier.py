@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+import torch
+
 from src.classifiers.zero_shot_classification_classifier import ZeroShotClassificationClassifier
 
 
@@ -29,4 +31,6 @@ def test_zero_shot_classification_classifier(mock_pipeline, labels):
 
     # Assertions
     assert result == expected_result, "Classifier returned incorrect scores."
-    mock_pipeline.assert_called_once_with("zero-shot-classification", model="facebook/bart-large-mnli")
+    device = 0 if torch.cuda.is_available() else -1
+    mock_pipeline.assert_called_once_with("zero-shot-classification", model="facebook/bart-large-mnli", device=device,
+                                          top_k=None)

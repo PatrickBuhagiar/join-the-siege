@@ -9,7 +9,7 @@ from src.classifiers.classifier import BaseClassifier
 class TextClassificationClassifier(BaseClassifier):
     def __init__(self, model_name="bert-base-uncased"):
         device = 0 if torch.cuda.is_available() else -1
-        self.pipeline = pipeline("text-classification", model=model_name, device=0, top_k=None)
+        self.pipeline = pipeline("text-classification", model=model_name, device=device, top_k=None)
 
     def classify(self, text: str, labels: List[str]) -> Dict[str, float]:
         # Get predictions from the pipeline

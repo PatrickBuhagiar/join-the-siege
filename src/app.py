@@ -37,4 +37,4 @@ def classify_file_route():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
