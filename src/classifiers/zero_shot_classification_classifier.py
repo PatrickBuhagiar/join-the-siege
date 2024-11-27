@@ -1,5 +1,6 @@
 from typing import List, Dict
 
+import torch
 from transformers import pipeline
 
 from src.classifiers.classifier import BaseClassifier
@@ -7,7 +8,9 @@ from src.classifiers.classifier import BaseClassifier
 
 class ZeroShotClassificationClassifier(BaseClassifier):
     def __init__(self, model_name="facebook/bart-large-mnli"):
-        self.pipeline = pipeline("zero-shot-classification", model=model_name, device=0, top_k=None)
+        # Use GPU if available, otherwise fall back to CPU
+        device = 0 if torch.cuda.is_available() else -1
+        self.pipeline = pipeline("zero-shot-classification", model=model_name, device=device, top_k=None)
 
     def classify(self, text: str, labels: List[str]) -> Dict[str, float]:
         predictions = self.pipeline(text, candidate_labels=labels)
