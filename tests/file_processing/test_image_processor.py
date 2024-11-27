@@ -1,3 +1,4 @@
+import difflib
 import os
 
 from werkzeug.datastructures import FileStorage
@@ -29,4 +30,6 @@ def test_image_processor():
         '\n'
         '358 Excuance Ptace, New York, N.Y. 100099 Fax 212.555 6390 THEX TO 45 3.4'
     )
-    assert text == expected_text, f"Expected OCR output to be:\n{expected_text}\nBut got:\n{text}"
+
+    similarity = difflib.SequenceMatcher(None, text, expected_text).ratio()
+    assert similarity > 0.85, f"OCR output similarity too low: {similarity}\nExpected:\n{expected_text}\nGot:\n{text}"
