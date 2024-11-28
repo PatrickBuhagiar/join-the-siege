@@ -38,6 +38,9 @@
 3. **Resource Management**
     - The Flask application requires manual scaling to handle increased workload.
 
+4. **Model tuning**
+    - Given more time, the models could be fine-tuned to improve classification accuracy.
+
 ---
 
 ## A Scalable Solution

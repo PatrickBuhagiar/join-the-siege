@@ -28,12 +28,15 @@ def get_document_classifier_service():
         While testing, I found that zero-shot-classification is slower than text-classification but got 8/9 of the file classifications correct.
         text-classification will require some fine-tuning to get the same accuracy, which will take time and some tinkering.
         
-        ultimately, I chose zero-shot-classification for its ease of use and accuracy. 
+        ultimately, I chose zero-shot-classification for its ease of use and accuracy, however more time is required to find the best model. 
+        facebook/bart-large-mnli worked best at one point, but the server crashes when using it, presumably due to memory, so I switched to valhalla/distilbart-mnli-12-3.
         """
-        classifier = ZeroShotClassificationClassifier()
+        # use facebook/bart-large-mnli in production, as it is more accurate
+        classifier = ZeroShotClassificationClassifier(model_name="valhalla/distilbart-mnli-12-3")
+        # classifier = TextClassificationClassifier()
         """ 
         I'm defining the classifier here, but to productionize this, it should be specified via a configuration file 
-        or environment variable.
+        or environment variable, and be models should be configurable per domain.
         """
         _service_instance = DocumentClassifierService(classifier)
     return _service_instance
