@@ -52,13 +52,12 @@ proposed solution.
 
 The proposed solution’s flow is illustrated below:
 
-```puml
+```mermaid
 sequenceDiagram
     actor User
     participant GCS as Google Cloud Storage
     participant CRF as Serverless Cloud Run Function
     participant DS as Datastore
-
     User ->> GCS: Upload files
     GCS ->> CRF: Trigger event
     CRF ->> GCS: Fetch file content
