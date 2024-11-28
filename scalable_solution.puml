@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant "Google Cloud Storage" as GCS
+participant "Serverless Cloud Run Function" as CRF
+participant "Datastore" as DS
+
+User -> GCS: Upload files
+GCS -> CRF: Trigger event
+CRF -> GCS: Fetch file content
+CRF -> CRF: Process file content and classify
+CRF -> DS: Store results
+User <-- DS: Results available (via query)
+
+@enduml
